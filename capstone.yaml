@@ -1,0 +1,15 @@
+name: flyrank-capstone-metering
+description: Usage Metering & Billing Engine
+
+run: uvicorn app.main:app --reload
+seed: python init_db.py
+test: pytest
+
+base_url: http://127.0.0.1:8000
+
+endpoints:
+  - GET /
+  - GET /health
+  - POST /generate
+  - GET /usage
+  - POST /webhooks/stripe
