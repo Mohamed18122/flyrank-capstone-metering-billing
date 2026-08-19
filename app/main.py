@@ -8,6 +8,7 @@ from app.models.plan import Plan
 from app.models.subscription import Subscription
 from app.models.usage_event import UsageEvent
 from app.services.meter import MeterService
+from app.services.pricing import calculate_token_cost
 from app.services.quota import QuotaExceededError
 
 
@@ -115,12 +116,20 @@ def get_usage(
 
     if usage_type == "api_calls":
         limit = plan.api_call_limit
+        cost_cents = used * 1
     else:
         limit = plan.ai_token_limit
+        cost_cents = calculate_token_cost(
+            input_tokens=used,
+            cached_input_tokens=0,
+            output_tokens=0,
+            reasoning_tokens=0,
+        )
 
     return {
         "tenant_id": tenant_id,
         "usage_type": usage_type,
         "used": used,
         "limit": limit,
+        "cost_cents": cost_cents,
     }
