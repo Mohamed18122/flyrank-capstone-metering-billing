@@ -10,6 +10,10 @@ base_url: http://127.0.0.1:8000
 endpoints:
   - GET /
   - GET /health
+  - GET /plans
   - POST /generate
   - GET /usage
+  - POST /checkout
+  - GET /checkout/success
+  - GET /checkout/cancel
   - POST /webhooks/stripe
